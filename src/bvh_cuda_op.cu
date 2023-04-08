@@ -926,7 +926,7 @@ void bvh_cuda_forward(at::Tensor triangles, at::Tensor *collision_tensor_ptr,
   const auto num_triangles = triangles.size(1);
 
   int device = triangles.get_device();
-  c10::cuda::CUDAGuard device_guard(device)
+  c10::cuda::CUDAGuard device_guard(device);
 
   thrust::device_vector<int> triangle_ids(num_triangles);
 
