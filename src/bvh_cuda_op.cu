@@ -33,6 +33,7 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
+#include <c10/cuda/CUDAGuard.h>
 
 #include "double_vec_ops.h"
 #include "helper_math.h"
@@ -923,6 +924,9 @@ void bvh_cuda_forward(at::Tensor triangles, at::Tensor *collision_tensor_ptr,
                       int max_collisions = 16) {
   const auto batch_size = triangles.size(0);
   const auto num_triangles = triangles.size(1);
+
+  int device = triangles.get_device();
+  c10::cuda::CUDAGuard device_guard(device)
 
   thrust::device_vector<int> triangle_ids(num_triangles);
 
